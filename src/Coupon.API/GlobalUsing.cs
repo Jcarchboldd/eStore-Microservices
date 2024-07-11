@@ -1,0 +1,12 @@
+﻿global using Asp.Versioning;
+global using Coupon.API.Controllers;
+global using Coupon.Domain.interfaces;
+global using Coupon.Domain.Repositories;
+global using Coupon.Infrastructure;
+global using Coupon.Infrastructure.UnitOfWork;
+global using Microsoft.EntityFrameworkCore;
+global using Coupon.Application.Commands;
+global using Coupon.Application.Queries;
+global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Asp.Versioning.Conventions;

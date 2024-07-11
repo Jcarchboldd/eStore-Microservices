@@ -1,0 +1,10 @@
+services:
+  couponapi:
+    image: couponapi
+    build:
+      context: ../src 
+      dockerfile: Coupon.API/Dockerfile
+    ports:
+      - "5037:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

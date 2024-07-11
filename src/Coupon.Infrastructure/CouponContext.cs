@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Coupon.Infrastructure
+﻿namespace Coupon.Infrastructure
 {
     public class CouponContext : DbContext
     {
@@ -9,6 +7,11 @@ namespace Coupon.Infrastructure
         }
 
         public DbSet<PromoCode> Coupons { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
 
