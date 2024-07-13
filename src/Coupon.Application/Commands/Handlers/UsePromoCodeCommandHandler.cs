@@ -1,6 +1,6 @@
 ﻿namespace Coupon.Application.Commands.Handlers
 {
-    public class UsePromoCodeCommandHandler : IRequestHandler<UsePromoCodeCommand, bool>
+    public class UsePromoCodeCommandHandler : IRequestHandler<UsePromoCodeCommand, bool>, IHandler
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator _mediator;
