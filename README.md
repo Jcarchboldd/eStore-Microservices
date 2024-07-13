@@ -1,5 +1,7 @@
 # eStore-Microservices
 
+**Note: This repository is currently in development. The goal is to implement and practice various modern technologies and best practices.**
+
 A scalable eStore application built using a microservices architecture with Blazor as the frontend framework, implementing Domain-Driven Design (DDD) principles and utilizing Radzen components. This project is developed using .NET 8 and demonstrates the integration of repository and unit of work patterns for robust data management.
 
 ## Project Overview
@@ -20,6 +22,8 @@ This project aims to create a comprehensive eStore application by leveraging mod
 - **ASP.NET Core**
 - **Entity Framework Core**
 - **Radzen Blazor Components**
-- **SQL Server**
+- **SQLite**
+- **MediatR**
+- **CQRS**
 - **Docker and Kubernetes**
 - **API Gateway (Ocelot)**
