@@ -10,6 +10,7 @@
             // Configure mediatR
             services.AddMediatR(cfg =>
             {
+                cfg.RegisterServicesFromAssemblyContaining(typeof(IHandlerApplication));
                 cfg.RegisterServicesFromAssemblyContaining(typeof(IHandler));
             });
 

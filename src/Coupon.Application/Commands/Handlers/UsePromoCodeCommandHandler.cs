@@ -1,34 +1,32 @@
 ﻿namespace Coupon.Application.Commands.Handlers
 {
-    public class UsePromoCodeCommandHandler : IRequestHandler<UsePromoCodeCommand, bool>, IHandler
+    public class UsePromoCodeCommandHandler : IRequestHandler<UsePromoCodeCommand, bool>, Abstractions.IHandler
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMediator _mediator;
-
-        public UsePromoCodeCommandHandler(IUnitOfWork unitOfWork, IMediator mediator)
+        public UsePromoCodeCommandHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mediator = mediator;
         }
 
         public async Task<bool> Handle(UsePromoCodeCommand request, CancellationToken cancellationToken)
         {
-            var promoCode = await _unitOfWork.PromoCodeRepository.GetByCodeAsync(request.Code);
-            if (promoCode == null || !promoCode.Active)
+            await _unitOfWork.BeginTransactionAsync();
+            try
             {
+                var promoCode = await _unitOfWork.PromoCodeRepository.GetByCodeAsync(request.Code);
+                if (promoCode == null) return false;
+
+                promoCode.UsePromoCode();
+                await _unitOfWork.PromoCodeRepository.UpdateAsync(promoCode);
+                await _unitOfWork.SaveEntitiesAsync();
+                await _unitOfWork.CommitAsync();
+                return true;
+            }
+            catch
+            {
+                await _unitOfWork.RollbackAsync();
                 return false;
             }
-
-            promoCode.UsePromoCode();
-            await _unitOfWork.PromoCodeRepository.UpdateAsync(promoCode);
-            var result = await _unitOfWork.SaveEntitiesAsync();
-
-            if (result)
-            {
-                await _mediator.Publish(new PromoCodeUsedEvent(promoCode), cancellationToken);
-            }
-
-            return result;
         }
     }
 }

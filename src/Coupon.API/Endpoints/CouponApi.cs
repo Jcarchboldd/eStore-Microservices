@@ -1,39 +1,48 @@
-﻿namespace Coupon.API.EndPoints
+﻿namespace Coupon.API.Endpoints
 {
     public static class CouponApi
     {
-        public static async Task<IResult> CreateCouponAsync(
-            CreatePromoCodeCommand command,
-            [AsParameters] CouponServices services)
+        public static IEndpointRouteBuilder MapCouponApiV1(this IEndpointRouteBuilder endpoints)
         {
-            var result = await services.Mediator.Send(command);
+            var apiVersionSet = endpoints.NewApiVersionSet()
+                                         .HasApiVersion(1.0)
+                                         .Build();
+
+            var couponsGroup = endpoints.MapGroup("/api/v1/coupons")
+                                        .WithApiVersionSet(apiVersionSet)
+                                        .HasApiVersion(1.0);
+
+            couponsGroup.MapPost("/", CreateCouponAsync);
+            couponsGroup.MapPut("/use/{code}", UseCouponAsync);
+            couponsGroup.MapGet("/{code}", GetCouponByCodeAsync);
+
+            return endpoints;
+        }
+
+        private static async Task<IResult> CreateCouponAsync(
+            CreatePromoCodeCommand command,
+            IMediator mediator)
+        {
+            var result = await mediator.Send(command);
             return result ? Results.Ok() : Results.BadRequest("Failed to create coupon.");
         }
 
-        public static async Task<IResult> UseCouponAsync(
+        private static async Task<IResult> UseCouponAsync(
             string code,
             UsePromoCodeCommand command,
-            [AsParameters] CouponServices services)
+            IMediator mediator)
         {
-            var result = await services.Mediator.Send(command);
+            command.Code = code;
+            var result = await mediator.Send(command);
             return result ? Results.Ok() : Results.Problem(detail: "Failed to use coupon.", statusCode: 500);
         }
 
-        public static async Task<IResult> GetCouponByCodeAsync(
+        private static async Task<IResult> GetCouponByCodeAsync(
             string code, 
-            [AsParameters] CouponServices services)
+            IMediator mediator)
         {
-            var coupon = await services.Mediator.Send(new GetPromoCodeByCodeQuery(code));
+            var coupon = await mediator.Send(new GetPromoCodeByCodeQuery(code));
             return coupon != null ? Results.Ok(coupon) : Results.NotFound();
-        }
-    }
-
-    public class CouponServices
-    {
-        public IMediator Mediator { get; }
-        public CouponServices(IMediator mediator)
-        {
-            Mediator = mediator;
         }
     }
 }

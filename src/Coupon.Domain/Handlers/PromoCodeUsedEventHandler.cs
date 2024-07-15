@@ -1,7 +1,6 @@
-﻿
-namespace Coupon.Domain.Handlers
+﻿namespace Coupon.Domain.Handlers
 {
-    public class PromoCodeUsedEventHandler : INotificationHandler<PromoCodeUsedEvent>
+    public class PromoCodeUsedEventHandler : INotificationHandler<PromoCodeUsedEvent>, IHandler
     {
         private readonly ILogger<PromoCodeUsedEventHandler> _logger;
 

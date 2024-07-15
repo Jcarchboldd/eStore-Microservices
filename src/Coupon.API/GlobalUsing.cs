@@ -12,5 +12,6 @@ global using Swashbuckle.AspNetCore.SwaggerGen;
 global using Coupon.API.Extensions;
 global using Coupon.Domain.interfaces;
 global using Coupon.Infrastructure.UnitOfWork;
-global using Coupon.Application.Abstractions;
+global using Coupon.API.Endpoints;
+global using IHandlerApplication = Coupon.Application.Abstractions.IHandler;
 

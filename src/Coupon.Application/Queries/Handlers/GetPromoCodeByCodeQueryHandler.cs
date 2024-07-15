@@ -1,6 +1,6 @@
 ﻿namespace Coupon.Application.Queries.Handlers
 {
-    public class GetPromoCodeByCodeQueryHandler : IRequestHandler<GetPromoCodeByCodeQuery, PromoCode?>, IHandler
+    public class GetPromoCodeByCodeQueryHandler : IRequestHandler<GetPromoCodeByCodeQuery, PromoCode?>, Abstractions.IHandler
     {
         private readonly IPromoCodeRepository _promoCodeRepository;
 
