@@ -14,4 +14,6 @@ global using Coupon.Domain.interfaces;
 global using Coupon.Infrastructure.UnitOfWork;
 global using Coupon.API.Endpoints;
 global using IHandlerApplication = Coupon.Application.Abstractions.IHandler;
-
+global using Common.Shared;
+global using System.Text.Json;
+global using Coupon.Application.DTOs;

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coupon.Domain", "Coupon.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coupon.Infrastructure", "Coupon.Infrastructure\Coupon.Infrastructure.csproj", "{6B54AC76-1B94-4758-99ED-549BCAB66A62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Shared", "Common.Shared\Common.Shared.csproj", "{09BE03B1-B9A0-4015-B15A-A3EFD8D09825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{6B54AC76-1B94-4758-99ED-549BCAB66A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B54AC76-1B94-4758-99ED-549BCAB66A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B54AC76-1B94-4758-99ED-549BCAB66A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09BE03B1-B9A0-4015-B15A-A3EFD8D09825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09BE03B1-B9A0-4015-B15A-A3EFD8D09825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09BE03B1-B9A0-4015-B15A-A3EFD8D09825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09BE03B1-B9A0-4015-B15A-A3EFD8D09825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

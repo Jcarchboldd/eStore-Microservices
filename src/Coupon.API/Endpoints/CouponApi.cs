@@ -24,7 +24,11 @@
             IMediator mediator)
         {
             var result = await mediator.Send(command);
-            return result ? Results.Ok() : Results.BadRequest("Failed to create coupon.");
+            if (result)
+            {
+                return Results.Ok(new ApiResponse<bool>(true, "Coupon created successfully", result));
+            }
+            return Results.BadRequest(new ApiResponse<bool>(false, "Failed to create coupon", result, ["Creation failed due to invalid data"]));
         }
 
         private static async Task<IResult> UseCouponAsync(
@@ -34,7 +38,12 @@
         {
             command.Code = code;
             var result = await mediator.Send(command);
-            return result ? Results.Ok() : Results.Problem(detail: "Failed to use coupon.", statusCode: 500);
+            if (result)
+            {
+                return Results.Ok(new ApiResponse<bool>(true, "Coupon used successfully", result));
+            }
+            var errorResponse = new ApiResponse<bool>(false, "Failed to use coupon", result, ["Usage failed due to invalid code"]);
+            return Results.Problem(detail: JsonSerializer.Serialize(errorResponse), statusCode: 500);
         }
 
         private static async Task<IResult> GetCouponByCodeAsync(
@@ -42,7 +51,20 @@
             IMediator mediator)
         {
             var coupon = await mediator.Send(new GetPromoCodeByCodeQuery(code));
-            return coupon != null ? Results.Ok(coupon) : Results.NotFound();
+            if (coupon != null)
+            {
+                var couponDto = new PromoCodeDTO
+                {
+                    Code = coupon.Code,
+                    Discount = coupon.Discount,
+                    Quantity = coupon.Quantity,
+                    ExpirationDate = coupon.ExpirationDate,
+                    Active = coupon.Active
+                };
+                return Results.Ok(new ApiResponse<PromoCodeDTO>(true, "Coupon retrieved successfully", couponDto));
+            }
+            var notFoundResponse = new ApiResponse<PromoCodeDTO>(false, "Coupon not found", null, ["No coupon found with the given code"]);
+            return Results.NotFound(JsonSerializer.Serialize(notFoundResponse));
         }
     }
 }
